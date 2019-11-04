@@ -11,7 +11,7 @@ import (
 
 func Test(t *testing.T) {
 	oldPwd, _ := os.Getwd()
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer os.RemoveAll(name)
 	err := os.Chdir(name)
 	assert.NoError(t, err)

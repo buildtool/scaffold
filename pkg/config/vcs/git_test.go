@@ -14,7 +14,7 @@ import (
 func TestGit_Clone(t *testing.T) {
 	vcs := &Git{}
 
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	dir, _ := ioutil.TempDir(os.TempDir(), "Git-repo")
 	defer func() { _ = os.RemoveAll(dir) }()

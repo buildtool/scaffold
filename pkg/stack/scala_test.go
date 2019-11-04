@@ -11,7 +11,7 @@ import (
 )
 
 func TestScala_Scaffold_Error_Creating_Base_Directories(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	filename := filepath.Join(name, "test")
 	_ = ioutil.WriteFile(filename, []byte("abc"), 0666)
@@ -31,7 +31,7 @@ func TestScala_Scaffold_Error_Creating_Base_Directories(t *testing.T) {
 }
 
 func TestScala_Scaffold_Error_Creating_Organisation_Directories(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	_ = os.MkdirAll(filepath.Join(name, "src", "main", "scala"), 0777)
 	filename := filepath.Join(name, "src", "main", "scala", "org")
@@ -52,7 +52,7 @@ func TestScala_Scaffold_Error_Creating_Organisation_Directories(t *testing.T) {
 }
 
 func TestScala_Scaffold_Error_Creating_Dockerfile(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	_ = os.MkdirAll(filepath.Join(name, "src", "main", "scala"), 0777)
 	filename := filepath.Join(name, "project", "plugins.sbt")
@@ -73,7 +73,7 @@ func TestScala_Scaffold_Error_Creating_Dockerfile(t *testing.T) {
 }
 
 func TestScala_Scaffold_Error_Appending_Dockerignore(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	_ = os.MkdirAll(filepath.Join(name, "src", "main", "scala"), 0777)
 	filename := filepath.Join(name, ".dockerignore")
@@ -94,7 +94,7 @@ func TestScala_Scaffold_Error_Appending_Dockerignore(t *testing.T) {
 }
 
 func TestScala_Scaffold(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	_ = ioutil.WriteFile(filepath.Join(name, ".dockerignore"), []byte(""), 0666)
 	_ = ioutil.WriteFile(filepath.Join(name, ".gitignore"), []byte(""), 0666)

@@ -20,7 +20,7 @@ func TestMain(m *testing.M) {
 }
 
 func setup() string {
-	name, _ = ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ = ioutil.TempDir(os.TempDir(), "scaffold")
 
 	return name
 }

@@ -24,7 +24,7 @@ func TestTemplating(t *testing.T) {
 }
 
 func TestGo_Scaffold_Error(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	filename := filepath.Join(name, "test")
 	_ = ioutil.WriteFile(filename, []byte("abc"), 0666)
@@ -44,7 +44,7 @@ func TestGo_Scaffold_Error(t *testing.T) {
 }
 
 func TestGo_Scaffold(t *testing.T) {
-	name, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(name) }()
 	editorconfig := filepath.Join(name, ".editorconfig")
 	gomod := filepath.Join(name, "go.mod")
