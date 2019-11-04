@@ -27,7 +27,7 @@ func TestMain(m *testing.M) {
 }
 
 func setup() string {
-	name, _ = ioutil.TempDir(os.TempDir(), "build-tools")
+	name, _ = ioutil.TempDir(os.TempDir(), "scaffold")
 
 	return name
 }
@@ -290,6 +290,43 @@ func TestScaffold_Ok(t *testing.T) {
 	assert.Equal(t, 0, exitCode)
 
 	assert.Equal(t, "\x1b[0m\x1b[94mCreating new service \x1b[39m\x1b[97m\x1b[1m'project'\x1b[0m\x1b[97m\x1b[39m \x1b[94musing stack \x1b[39m\x1b[97m\x1b[1m'none'\x1b[0m\x1b[97m\x1b[39m\n\x1b[0m\x1b[0m\x1b[94mCreating repository at \x1b[39m\x1b[97m\x1b[1m'mockVcs'\x1b[0m\x1b[97m\x1b[39m\n\x1b[0m\x1b[0m\x1b[32mCreated repository \x1b[39m\x1b[97m\x1b[1m'file:///tmp'\x1b[0m\x1b[97m\x1b[39m\n\x1b[0m\x1b[0m\x1b[94mCreating build pipeline for \x1b[39m\x1b[97m\x1b[1m'project'\x1b[0m\x1b[97m\x1b[39m\n\x1b[0m", out.String())
+}
+
+func TestLoad_YAML_Scaffold_Multiple_CI(t *testing.T) {
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
+	defer func() { _ = os.RemoveAll(name) }()
+	yaml := `
+ci: 
+  gitlab:
+    group: group
+    token: token
+  buildkite:
+    token: token
+`
+	_ = ioutil.WriteFile(filepath.Join(name, ".scaffold.yaml"), []byte(yaml), 0777)
+
+	out := &bytes.Buffer{}
+	_, err := Load(name, out)
+	assert.EqualError(t, err, "scaffold CI already defined, please check configuration")
+	assert.Equal(t, fmt.Sprintf("\x1b[0mParsing config from file: \x1b[32m'%s/.scaffold.yaml'\x1b[39m\x1b[0m\n", name), out.String())
+}
+
+func TestLoad_YAML_Scaffold_Multiple_VCS(t *testing.T) {
+	name, _ := ioutil.TempDir(os.TempDir(), "scaffold")
+	defer func() { _ = os.RemoveAll(name) }()
+	yaml := `
+vcs: 
+  gitlab: 
+    group: group
+  github:
+    token: token
+`
+	_ = ioutil.WriteFile(filepath.Join(name, ".scaffold.yaml"), []byte(yaml), 0777)
+
+	out := &bytes.Buffer{}
+	_, err := Load(name, out)
+	assert.EqualError(t, err, "scaffold VCS already defined, please check configuration")
+	assert.Equal(t, fmt.Sprintf("\x1b[0mParsing config from file: \x1b[32m'%s/.scaffold.yaml'\x1b[39m\x1b[0m\n", name), out.String())
 }
 
 type errorStack struct{}

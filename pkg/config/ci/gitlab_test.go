@@ -107,7 +107,7 @@ func TestGitlab_Validate_Ok(t *testing.T) {
 }
 
 func TestGitlab_Scaffold_Error(t *testing.T) {
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	name := filepath.Join(dir, "dummy")
@@ -120,7 +120,7 @@ func TestGitlab_Scaffold_Error(t *testing.T) {
 }
 
 func TestGitlab_Scaffold(t *testing.T) {
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	ci := &Gitlab{}
@@ -217,7 +217,7 @@ var expectedGitlabCiYml = `stages:
 variables:
   DOCKER_HOST: tcp://docker:2375/
 
-image: registry.github.com/buildtool/build-tools:master
+image: buildtool/build-tools
 
 build:
   stage: build

@@ -115,7 +115,7 @@ func TestBuildkite_Validate_Ok(t *testing.T) {
 func TestBuildkite_Scaffold_WriteError_PipelineYml(t *testing.T) {
 	ci := &Buildkite{}
 
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	name := filepath.Join(dir, ".buildkite")
@@ -129,7 +129,7 @@ func TestBuildkite_Scaffold_WriteError_PipelineYml(t *testing.T) {
 func TestBuildkite_Scaffold_WriteError_DockerIgnore(t *testing.T) {
 	ci := &Buildkite{}
 
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	name := filepath.Join(dir, ".dockerignore")
@@ -143,7 +143,7 @@ func TestBuildkite_Scaffold_WriteError_DockerIgnore(t *testing.T) {
 func TestBuildkite_Scaffold_CreateError(t *testing.T) {
 	ci := &Buildkite{pipelineService: &mockPipelineService{createErr: errors.New("create error")}}
 
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	_, err := ci.Scaffold(dir, templating.TemplateData{})
@@ -155,7 +155,7 @@ func TestBuildkite_Scaffold_Create_Github(t *testing.T) {
 	service := &mockPipelineService{pipeline: pipeline("https://hookUrl", "", "")}
 	ci := &Buildkite{pipelineService: service}
 
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	data := templating.TemplateData{
@@ -195,7 +195,7 @@ func TestBuildkite_Scaffold_Create_Other(t *testing.T) {
 	service := &mockPipelineService{pipeline: pipeline("https://hookUrl", "", "")}
 	ci := &Buildkite{pipelineService: service}
 
-	dir, _ := ioutil.TempDir(os.TempDir(), "build-tools")
+	dir, _ := ioutil.TempDir(os.TempDir(), "scaffold")
 	defer func() { _ = os.RemoveAll(dir) }()
 
 	data := templating.TemplateData{
