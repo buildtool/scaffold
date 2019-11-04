@@ -1,0 +1,51 @@
+project_name: scaffold
+
+env:
+  - CGO_ENABLED=0
+
+builds:
+  - id: scaffold
+    main: ./cmd/scaffold/scaffold.go
+    binary: scaffold
+    flags:
+      - -tags=prod
+    ldflags:
+      - -s -w
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+
+brews:
+  - name: scaffold
+    github:
+      owner: buildtool
+      name: homebrew-taps
+    folder: Formula
+    commit_author:
+      name: peter-stc
+      email: peter@sparetimecoders.com
+
+archives:
+
+- id: scaffold
+  replacements:
+    darwin: Darwin
+    linux: Linux
+    windows: Windows
+    386: i386
+    amd64: x86_64
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+    - '^docs:'
+    - '^test:'
