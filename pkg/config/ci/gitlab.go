@@ -119,7 +119,7 @@ stages:
 variables:
   DOCKER_HOST: tcp://docker:2375/
 
-image: registry.github.com/buildtool/scaffold:master
+image: buildtool/build-tools
 
 build:
   stage: build

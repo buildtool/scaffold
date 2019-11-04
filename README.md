@@ -16,8 +16,7 @@
 <p align="center">
   <a href="https://github.com/buildtool/scaffold/blob/master/LICENSE"><img alt="LICENSE" src="https://img.shields.io/badge/license-MIT-blue.svg?maxAge=43200"></a>
   <a href="https://codecov.io/github/buildtool/scaffold"><img alt="Coverage Status" src="https://codecov.io/gh/buildtool/scaffold/branch/master/graph/badge.svg"></a>
-  <a href="https://codebeat.co/projects/github-com-buildtoolbuild-tools-master"><img alt="codebeat badge" src="https://codebeat.co/badges/434836f7-e0ab-4af9-8ef8-60cde2738764" /></a>
-  <a href="https://goreportcard.com/report/github.com/buildtool/scaffold"><img alt="goreportcard badge" src="https://goreportcard.com/badge/github.com/buildtool/scaffold" /></a>
+  <a href="https://codebeat.co/projects/github-com-buildtool-scaffold-master"><img alt="codebeat badge" src="https://codebeat.co/badges/bec62abc-78b9-4a9f-8048-1e29117c512b" /></a>  <a href="https://goreportcard.com/report/github.com/buildtool/scaffold"><img alt="goreportcard badge" src="https://goreportcard.com/badge/github.com/buildtool/scaffold" /></a>
   <a href="https://libraries.io/github/buildtool/scaffold"><img alt="" src="https://img.shields.io/librariesio/github/buildtool/scaffold"></a>
 </p>
 
