@@ -16,5 +16,4 @@ You can follow the documentation on
 
 ## Submit a pull request
 
-Push your branch to your `scaffold` fork and open a pull request against the
-master branch.
+Push your branch to your `scaffold` fork and open a pull request against the master branch.

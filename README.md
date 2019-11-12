@@ -1,7 +1,7 @@
 
 <p align="center">
   <h3 align="center">Scaffold</h3>
-  <p align="center">Setup new projects to use with <a href="https://github.com/buildtool/build-tools">build-tools</a> </p>
+  <p align="center">Setup new projects to use with <a href="https://github.com/buildtool/build-tools">build-tools</a> 
 </p>
 
 ---
