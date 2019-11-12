@@ -9,8 +9,6 @@ builds:
     binary: scaffold
     flags:
       - -tags=prod
-    ldflags:
-      - -s -w
     goos:
       - linux
       - darwin
