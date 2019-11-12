@@ -36,6 +36,81 @@ func teardown(tempDir string) {
 	_ = os.RemoveAll(tempDir)
 }
 
+func TestLoad_Env_Overrides_YAML(t *testing.T) {
+	os.Clearenv()
+	defer SetEnv("BUILDKITE_TOKEN", "test")()
+
+	yaml := `
+ci:
+  buildkite:
+    organisation: example
+    token: abc
+vcs:
+  github:
+    organisation: example
+    token: abc
+`
+	file := filepath.Join(name, ".scaffold.yaml")
+	_ = ioutil.WriteFile(file, []byte(yaml), 0777)
+	defer func() { _ = os.Remove(file) }()
+
+	out := &bytes.Buffer{}
+
+	cfg, err := Load(name, out)
+	assert.NoError(t, err)
+	assert.NotNil(t, cfg)
+	assert.Equal(t, "test", cfg.CI.Buildkite.Token)
+}
+
+func TestLoad_SubDir_Overrides_Dir(t *testing.T) {
+	os.Clearenv()
+
+	yaml := `
+ci:
+  buildkite:
+    organisation: example
+    token: abc
+vcs:
+  github:
+    organisation: example
+    token: abc
+`
+	subYaml := `
+ci:
+  buildkite:
+    organisation: example
+    token: test
+vcs:
+  github:
+    organisation: example
+    token: abc
+`
+	file := filepath.Join(name, ".scaffold.yaml")
+	_ = ioutil.WriteFile(file, []byte(yaml), 0777)
+	defer func() { _ = os.Remove(file) }()
+	sub := filepath.Join(name, "sub")
+	_ = os.MkdirAll(sub, 0777)
+	defer func() { _ = os.RemoveAll(sub) }()
+	_ = ioutil.WriteFile(filepath.Join(sub, ".scaffold.yaml"), []byte(subYaml), 0777)
+
+	out := &bytes.Buffer{}
+
+	cfg, err := Load(sub, out)
+	assert.NoError(t, err)
+	assert.NotNil(t, cfg)
+	assert.Equal(t, "test", cfg.CI.Buildkite.Token)
+}
+
+func TestParseConfigFile_Return_Error_For_Unreadable_File(t *testing.T) {
+	out := &bytes.Buffer{}
+	dir := filepath.Join(name, ".scaffold.yaml")
+	_ = os.MkdirAll(dir, 0777)
+	defer func() { _ = os.RemoveAll(dir) }()
+
+	_, err := Load(name, out)
+	assert.EqualError(t, err, fmt.Sprintf("read %s: is a directory", dir))
+}
+
 func TestValidateConfig_No_VCS_Configured(t *testing.T) {
 	cfg := InitEmptyConfig()
 	err := cfg.ValidateConfig()

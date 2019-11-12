@@ -102,6 +102,32 @@ vcs:
 	assert.Equal(t, fmt.Sprintf("\x1b[0mParsing config from file: \x1b[32m'%s'\x1b[39m\x1b[0m\n\x1b[0m\x1b[31mGET https://api.buildkite.com/v2/user: 401 Authentication required. Please supply a valid API Access Token: https://buildkite.com/docs/apis/rest-api#authentication\x1b[39m\x1b[0m\n", file), out.String())
 }
 
+func TestScaffold_Fails_For_Multiple_Configured_CIs(t *testing.T) {
+	defer SetEnv("GITLAB_GROUP", "test")()
+	defer SetEnv("GITLAB_TOKEN", "test")()
+
+	yaml := `
+ci:
+  buildkite:
+    organisation: example
+    token: abc
+vcs:
+  github:
+    organisation: example
+    token: abc
+`
+	file := filepath.Join(name, ".scaffold.yaml")
+	_ = ioutil.WriteFile(file, []byte(yaml), 0777)
+	defer func() { _ = os.Remove(file) }()
+
+	out := bytes.Buffer{}
+
+	exitCode := Setup(name, &out, "project")
+
+	assert.Equal(t, -3, exitCode)
+	assert.Equal(t, fmt.Sprintf("\x1b[0mParsing config from file: \x1b[32m'%s'\x1b[39m\x1b[0m\n\x1b[0m\x1b[31mscaffold CI already defined, please check configuration\x1b[39m\x1b[0m\n", file), out.String())
+}
+
 func TestScaffold_Configure_Error(t *testing.T) {
 	cfg := config.InitEmptyConfig()
 	cfg.CurrentCI = &mockCi{configErr: errors.New("config error")}
