@@ -5,12 +5,10 @@ env:
 
 builds:
   - id: scaffold
-    main: ./cmd/scaffold/scaffold.go
+    main: ./cmd/scaffold.go
     binary: scaffold
     flags:
       - -tags=prod
-    ldflags:
-      - -s -w
     goos:
       - linux
       - darwin
