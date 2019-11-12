@@ -2,8 +2,10 @@ name: release
 
 on:
   push:
+    branches-ignore:
+      - '**'
     tags:
-      - 'v*'
+      - 'v*.*.*'
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
