@@ -20,5 +20,45 @@
   <a href="https://libraries.io/github/buildtool/scaffold"><img alt="" src="https://img.shields.io/librariesio/github/buildtool/scaffold"></a>
 </p>
 
+# Setup
+You can install the pre-compiled binary (in several different ways), use Docker or compile from source.
+
+## Installation pre-built binaries
+**Homebrew tap**
+
+```sh 
+$ brew install buildtool/taps/scaffold
+```
+
+**Shell script**
+```sh
+$ curl -sfL https://raw.githubusercontent.com/buildtool/scaffold/master/install.sh | sh
+```
+**Manually**
+
+Download the pre-compiled binaries from the [releases](https://github.com/buildtool/scaffold/releases) page and copy to the desired location.
+
+      
+## Compiling from source
+```sh
+
+    # clone it outside GOPATH
+    $ git clone https://github.com/buildtool/scaffold
+    $ cd build-tools
+    
+    # get dependencies using go modules (needs go 1.11+)
+    $ go get ./...
+    
+    # build
+    $ go build ./cmd
+    
+    # check it works
+    ./scaffold -version
+```
+
+
+
 This project adheres to the Contributor Covenant [code of conduct](CODE_OF_CONDUCT.md). By participating, you are expected to uphold this code.
 We appreciate your contribution. Please refer to our [contributing guidelines](CONTRIBUTING.md) for further information.
+
+
