@@ -21,7 +21,7 @@
 </p>
 
 # Setup
-You can install the pre-compiled binary (in several different ways), use Docker or compile from source.
+You can install the pre-compiled binary (in several different ways) or compile from source.
 
 ## Installation pre-built binaries
 **Homebrew tap**
