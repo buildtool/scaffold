@@ -58,14 +58,16 @@ func (c *Config) ValidateConfig() error {
 func Load(dir string, out io.Writer) (*Config, error) {
 	cfg := InitEmptyConfig()
 
+	if err := env.Parse(cfg); err != nil {
+		return nil, err
+	}
+
 	err := parseConfigFiles(dir, out, func(dir string) error {
 		return parseConfigFile(dir, cfg)
 	})
 	if err != nil {
 		return nil, err
 	}
-
-	err = env.Parse(cfg)
 
 	return cfg, err
 }
@@ -282,13 +284,13 @@ func parseConfigFiles(dir string, out io.Writer, fn func(string) error) error {
 
 		parent = filepath.Dir(parent)
 	}
-	for i, file := range files {
+	for i, f := range files {
 		if i == 0 {
-			_, _ = fmt.Fprintln(out, tml.Sprintf("Parsing config from file: <green>'%s'</green>", file))
+			_, _ = fmt.Fprintln(out, tml.Sprintf("Parsing config from file: <green>'%s'</green>", f))
 		} else {
-			_, _ = fmt.Fprintln(out, tml.Sprintf("Merging with config from file: <green>'%s'</green>", file))
+			_, _ = fmt.Fprintln(out, tml.Sprintf("Merging with config from file: <green>'%s'</green>", f))
 		}
-		if err := fn(file); err != nil {
+		if err := fn(f); err != nil {
 			return err
 		}
 	}
